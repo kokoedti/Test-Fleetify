@@ -137,7 +137,8 @@ const Home = () => {
             </div>
            }
             {
-               !eventFlag.loading && <div className="p-5 border border-gray-300 rounded-lg">
+               !eventFlag.loading && 
+               <div className="p-5 border border-gray-300 rounded-lg">
                     <DataTable
                     columns={Columns}
                     data={tableArr}
