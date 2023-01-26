@@ -1,6 +1,8 @@
-const GeneralButton = ({label}) => {
+import './general-button.css'
+
+const GeneralButton = ({label, setEvent, disablingStatus}) => {
     return(
-        <button>{label ? label : 'OK'}</button>
+        <button disabled={disablingStatus} onClick={() => setEvent('triggered')}>{label ? label : 'OK'}</button>
     )
 }
 

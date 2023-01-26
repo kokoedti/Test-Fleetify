@@ -6,5 +6,11 @@ const getPost = async () => {
     })
 }
 
+const getPostByKeyword = async (param) => {
+    return await axios.get(`https://dummyjson.com/products/search?q=${param}`).then((item) => {
+        return item.data
+    })
+}
 
-export {getPost}
+
+export {getPost, getPostByKeyword}
