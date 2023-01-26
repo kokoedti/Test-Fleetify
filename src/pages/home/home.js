@@ -4,6 +4,7 @@ import { ColorRing } from "react-loader-spinner"
 import GeneralButton from "../../components/button/general-button"
 import SearchBar from "../../components/searchbar/searchbar"
 import { getPost, getPostByKeyword } from "../../services/posts/post-service"
+import { Columns } from "../../tools/data-table"
 import './home.css'
 
 const Home = () => {
@@ -17,40 +18,12 @@ const Home = () => {
         clearInput: false
     })
     const [mounted, setMounted] = useState(false)
-    const priceTag = '$'
+    const submitButtonStyle = 'text-white bg-blue-700 rounded-lg w-full h-full'
+    const resetButonStyle = 'text-white bg-red-700 rounded-lg w-full h-full'
+    
 
-    const columns = [
-        {
-            name: 'Product Name',
-            selector: row => row.title,
-            sortable: true
-        },
-        {
-            name: 'Brand',
-            selector: row => row.brand,
-        },
-        {
-            name: 'Category',
-            selector: row => row.category,
-            sortable: true
-        },
-        {
-            name: 'Price',
-            selector: row => `${priceTag} ${row.price}`,
-            sortable: true
-        },
-        {
-            name: 'Rating',
-            selector: row => row.rating,
-        },
-        {
-            name: 'Stock',
-            selector: row => row.stock,
-        },
-    ];
-
-    const fetchPost = async () => {
-       await getPost().then((item) => {
+    const fetchPost = () => {
+        getPost().then((item) => {
             setTableArr([...item.products])
             resetFlag('success')
         }).catch((error) => {
@@ -59,8 +32,8 @@ const Home = () => {
     }
     
 
-    const fetchPostByKeyword = async (param) => {
-        await getPostByKeyword(param).then((item) => {
+    const fetchPostByKeyword = (param) => {
+        getPostByKeyword(param).then((item) => {
             setTableArr([...item.products])
             resetFlag('success')
         }).catch((error) => {
@@ -131,17 +104,25 @@ const Home = () => {
     }, [mounted])
 
     return(
-        <div className="canvas">
-            <div>
-                <h1>
+        <div className="p-5">
+            <div className="title-canvas">
+                <h1 className="text-3xl font-bold">
                     Products List
                 </h1>
             </div>
 
-            <div className="search-row">
-                <SearchBar placeholder={'Search'} setEvent={setKeyValue} clearInput={eventFlag.clearInput}></SearchBar>
-                <GeneralButton label={'Cari'} setEvent={triggerSearch} disablingStatus={eventFlag.buttonSearchDisabled}></GeneralButton>
-                <GeneralButton label={buttonLabel} setEvent={triggerReset} disablingStatus={eventFlag.buttonResetDisabled}></GeneralButton>
+            <div className="row-canvas">
+                <div className="grid grid-cols-4 gap-x-1.5">
+                    <div className="col-span-2">
+                        <SearchBar placeholder={'Search'} setEvent={setKeyValue} clearInput={eventFlag.clearInput}></SearchBar>
+                    </div>
+                    <div>
+                        <GeneralButton label={'Cari'} setEvent={triggerSearch} disablingStatus={eventFlag.buttonSearchDisabled} buttonStyle={submitButtonStyle}></GeneralButton>
+                    </div>
+                    <div>
+                        <GeneralButton label={buttonLabel} setEvent={triggerReset} disablingStatus={eventFlag.buttonResetDisabled} buttonStyle={resetButonStyle}></GeneralButton>
+                    </div>
+                </div>
             </div>
            {
             eventFlag.loading && 
@@ -156,12 +137,14 @@ const Home = () => {
             </div>
            }
             {
-               !eventFlag.loading && <DataTable
-                    columns={columns}
+               !eventFlag.loading && <div className="p-5 border border-gray-300 rounded-lg">
+                    <DataTable
+                    columns={Columns}
                     data={tableArr}
                     dense
                     pagination
-                />
+                    />
+                </div>
             }
             
            

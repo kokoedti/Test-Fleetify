@@ -19,10 +19,12 @@ const SearchBar = ({placeholder, setEvent, clearInput}) => {
     },[clearInput])
 
     return(
-        <input 
-        className='item-margin'
-        placeholder={placeholder ? placeholder : 'Text'} 
-        id={'text'} onChange={listener} />
+        <>
+            <input 
+            className='border border-gray-300 rounded-lg text-sm rounded-lg p-2.5 w-full'
+            placeholder={placeholder ? placeholder : 'Text'} 
+            id={'text'} onChange={listener} />
+        </>
     )
 }
 
